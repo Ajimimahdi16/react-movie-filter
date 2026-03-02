@@ -15,6 +15,15 @@ function App() {
 
   const [filteredMovies, setFilteredMovies] = useState(move); // Stato per i film filtrati
   const [searchMuove, setSearchMuove] = useState(''); // Stato per il filtro di genere
+
+  useEffect(() => {
+    setFilteredMovies(
+      mouves.filter((movie) =>
+        movie.genre.toLowerCase().includes(searchMuove.toLowerCase())
+      )
+    );
+  }, [searchMuove, mouves]);
+
   
 // Funzione per cercare i film
   function cercaFilm(e){ 
@@ -40,8 +49,8 @@ function App() {
     </div>
     <section className='lista-film'>
       <ul>
-        {mouves.map((move, index) => (
-          <li key={index}>{move.title}</li>
+        {filteredMovies.map((movie, index) => (
+          <li key={index}>{movie.title}</li>
         ))}
       </ul>
     </section>
