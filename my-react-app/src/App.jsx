@@ -1,33 +1,62 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState, useEffect } from 'react'
 
-function App() {
-  const [count, setCount] = useState(0)
+  const move=[
+  { title: 'Inception', genre: 'Fantascienza' },
+  { title: 'Il Padrino', genre: 'Thriller' },
+  { title: 'Titanic', genre: 'Romantico' },
+  { title: 'Batman', genre: 'Azione' },
+  { title: 'Interstellar', genre: 'Fantascienza' },
+  { title: 'Pulp Fiction', genre: 'Thriller' },
+]
+function App() { 
+  const [mouves, setMouves] = useState(move); // Stato per i film
+  const [search, setSearch] = useState(''); // Stato per la ricerca
+
+
+  const [filteredMovies, setFilteredMovies] = useState(move); // Stato per i film filtrati
+  const [searchMuove, setSearchMuove] = useState(''); // Stato per il filtro di genere
+  
+// Funzione per cercare i film
+  function cercaFilm(e){ 
+    e.preventDefault();
+  setMouves([...move,search.trim()]);
+  setSearch('');
+
+
+  }
+
 
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+    <h1>Lista dei Film</h1>
+    <div>
+      <input 
+        type="text" 
+        placeholder="Cerca per genere" 
+        value={searchMuove}
+        onChange={(e) => setSearchMuove(e.target.value)}
+      />
+      <button>cerca il genere</button>
+    </div>
+    <section className='lista-film'>
+      <ul>
+        {mouves.map((move, index) => (
+          <li key={index}>{move.title}</li>
+        ))}
+      </ul>
+    </section>
+    <form onSubmit={cercaFilm}>
+      <input 
+        type="text" 
+        name="search"  
+        placeholder="Cerca film" 
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
+      />
+      <button type="submit">Cerca</button>
+    </form>
+
+      
     </>
   )
 }
